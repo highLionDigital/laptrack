@@ -1,0 +1,8 @@
+<% if @user %>
+  <h1>Welcome back</h1>
+<% else %>
+  <h1>Welcome to Lap Track</h1>
+
+  <!-- Place a login button anywhere on your application -->
+  <%= button_to "Login", "/auth/auth0", method: :post, data: { turbo: false } %>
+<% end %>
