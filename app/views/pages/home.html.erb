@@ -1,0 +1,15 @@
+<% if current_user %>
+  <h1>Welcome back, <%= current_user[:name] %> </h1>
+  <p><%= link_to 'Click here', my_profile_path %> to go to your driver profile.
+
+  <!-- Place a logout button anywhere on your application -->
+  <%= button_to 'Log Out', logout_path, method: :get, data: {turbo: "false"} %>
+<% else %>
+  <h1>Welcome to Lap Track</h1>
+  <h3>Log in to start tracking go-kart sessions</h3>
+
+  <!-- Place a login button anywhere on your application -->
+  <!-- <%= button_to "Login", "/auth/auth0", method: :post, data: { turbo: false } %> -->
+  <%= button_to 'Log In', '/auth/auth0', params: {prompt: 'login'}, data: {turbo: "false"} %>
+  <%= button_to 'Sign Up', '/auth/auth0', params: {prompt: 'login', screen_hint: 'signup'}, data: {turbo: "false"} %>
+<% end %>
