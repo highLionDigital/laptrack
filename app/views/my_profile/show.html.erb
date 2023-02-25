@@ -1,0 +1,8 @@
+<div>
+  <p>This is your driver profile, <%= current_user[:nickname] %></p>
+  <p>
+    Full profile info:<br>
+    <%= JSON.pretty_generate(current_user) %>
+  </p>
+  <p>Go back <%= link_to "home", root_path %>
+</div>

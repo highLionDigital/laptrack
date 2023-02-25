@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
-  get 'pages/home'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
-  root "pages#home"
+  get "/my_profile" => "my_profile#show"
 
-  get '/auth/auth0/callback' => 'auth0#callback'
-  get '/auth/failure' => 'auth0#failure'
-  get '/auth/logout' => 'auth0#logout'
+  scope :auth do
+    get "failure" => "auth0#failure"
+    get "logout" => "auth0#logout"
+
+    scope :auth0 do
+      get "callback" => "auth0#callback"
+    end
+  end
+
+  root "pages#home"
 end

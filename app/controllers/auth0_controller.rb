@@ -7,10 +7,11 @@ class Auth0Controller < ApplicationController
     # Refer to https://github.com/auth0/omniauth-auth0/blob/master/EXAMPLES.md#example-of-the-resulting-authentication-hash 
     # for complete information on 'omniauth.auth' contents.
     auth_info = request.env['omniauth.auth']
-    session[:userinfo] = auth_info['extra']['raw_info']
+    session[:credentials] = {}
+    session[:credentials][:id_token] = auth_info['credentials']['id_token']
 
     # Redirect to the URL you want after successful auth
-    redirect_to root_path
+    redirect_to my_profile_path
   end
 
   def failure
@@ -32,10 +33,6 @@ class Auth0Controller < ApplicationController
       client_id: AUTH0_CONFIG['auth0_client_id']
     }
 
-    URI::HTTPS.build(host: AUTH0_CONFIG['auth0_domain'], path: '/v2/logout', query: to_query(request_params)).to_s
-  end
-
-  def to_query(hash)
-    hash.map { |k, v| "#{k}=#{CGI.escape(v)}" unless v.nil? }.reject(&:nil?).join('&')
+    URI::HTTPS.build(host: AUTH0_CONFIG['auth0_domain'], path: '/v2/logout', query: request_params.to_query).to_s
   end
 end
