@@ -1,8 +1,14 @@
 <div>
-  <p>This is your driver profile, <%= current_user[:nickname] %></p>
+  <h3>This is your profile page, <%= current_user[:nickname] %></h3>
+  <p>User account information:</p>
+  <table>
+    <tr><td><%= image_tag("#{current_user[:picture]}") %></td><td>Name: <%= current_user[:name] %></td></tr>
+    <tr><td></td><td>Nickname: <%= current_user[:nickname] %></td></tr>
+    <tr><td></td><td>Email: <%= current_user[:email] %></td></tr>
+  </table>
   <p>
     Full profile info:<br>
     <%= JSON.pretty_generate(current_user) %>
   </p>
-  <p>Go back <%= link_to "home", root_path %>
+  <p>Go back <%= link_to "home", root_path %></p>
 </div>
