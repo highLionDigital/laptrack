@@ -10,6 +10,10 @@ class Auth0Controller < ApplicationController
     session[:credentials] = {}
     session[:credentials][:id_token] = auth_info['credentials']['id_token']
 
+    user = User.find_or_create_by(auth0_id: auth_info[:uid]) do |user|
+      user.email = auth_info[:info][:email]
+    end
+
     # Redirect to the URL you want after successful auth
     redirect_to my_profile_path
   end
