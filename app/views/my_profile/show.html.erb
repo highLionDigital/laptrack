@@ -1,6 +1,7 @@
 <div>
-  <h3>This is your profile page, <%= current_user[:nickname] %></h3>
-  <p>User account information:</p>
+  <h2>This is your profile page, <%= current_user[:nickname] %></h2>
+  <p>Go back <%= link_to "home", root_path %></p>
+  <h4>User account information:</h4>
   <table>
     <tr><td><%= image_tag("#{current_user[:picture]}") %></td><td>Name: <%= current_user[:name] %></td></tr>
     <tr><td></td><td>Nickname: <%= current_user[:nickname] %></td></tr>
@@ -10,5 +11,4 @@
     Full profile info:<br>
     <%= JSON.pretty_generate(current_user) %>
   </p>
-  <p>Go back <%= link_to "home", root_path %></p>
 </div>

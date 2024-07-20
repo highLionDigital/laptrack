@@ -1,0 +1,16 @@
+<h1>Welcome to</h1>
+<h3><%= @circuit.name %></h3>
+<h5>Since <%= @circuit.opened %></h5>
+
+<p><%= @circuit.address %></p>
+<p><%= @circuit.website %></p>
+
+<p><%= @circuit.description %></p>
+
+<ul>
+  <li><%= link_to "Edit Circuit", edit_circuit_path(@circuit) %></li>
+  <li><%= link_to "Delete Circuit", circuit_path(@circuit), data: {
+                turbo_method: :delete,
+                turbo_confirm: "Are you sure?"
+            } %></li>
+</ul>

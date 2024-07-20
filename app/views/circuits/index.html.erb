@@ -1,0 +1,12 @@
+<h1>Circuits</h1>
+
+<ul>
+  <% @circuits.each do |circuit| %>
+    <li>
+      <%= link_to circuit.name, circuit %>
+    </li>
+  <% end %>
+</ul>
+
+<p><%= link_to "Add a Circuit", new_circuit_path %></p>
+<p><%= link_to "Home", root_path %></p>

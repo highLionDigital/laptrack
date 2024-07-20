@@ -13,3 +13,5 @@
   <%= button_to 'Log In', '/auth/auth0', params: {prompt: 'login'}, data: {turbo: "false"} %>
   <%= button_to 'Sign Up', '/auth/auth0', params: {prompt: 'login', screen_hint: 'signup'}, data: {turbo: "false"} %>
 <% end %>
+
+<%= button_to "View all Circuits", circuits_path, method: :get %>
