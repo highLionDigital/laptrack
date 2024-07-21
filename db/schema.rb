@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_08_044956) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_18_050812) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "circuits", force: :cascade do |t|
+    t.string "name"
+    t.date "opened"
+    t.string "website"
+    t.string "address"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "drivers", force: :cascade do |t|
     t.text "bio"
@@ -23,6 +33,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_08_044956) do
     t.index ["user_id"], name: "index_drivers_on_user_id"
   end
 
+  create_table "tracks", force: :cascade do |t|
+    t.bigint "circuit_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["circuit_id"], name: "index_tracks_on_circuit_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.datetime "created_at", null: false
@@ -31,4 +49,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_08_044956) do
   end
 
   add_foreign_key "drivers", "users"
+  add_foreign_key "tracks", "circuits"
 end
