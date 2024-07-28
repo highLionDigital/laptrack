@@ -1,4 +1,4 @@
-<%= form_with uri: [:circuits, :track] do |form| %>
+<%= form_with(model: [@circuit, @track], local: true) do |form| %>
 
   <div>
     <%= form.label :name %><br>
@@ -6,8 +6,11 @@
   </div>
 
   <div>
-    <%= form.label :location %><br>
-    <%= form.text_field :location %>
+    <%= form.label :location %>
+    <%= form.collection_radio_buttons :location, Track::LOCATIONS, :to_s, :titleize do |b| %>
+      <%= b.radio_button %>
+      <%= b.label %>
+    <% end %>
   </div>
 
   <div>

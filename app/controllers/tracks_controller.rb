@@ -1,11 +1,20 @@
 class TracksController < ApplicationController
+  before_action :set_circuit, except: :show
+
+  def index
+    @tracks = @circuit ? @circuit.tracks : Track.all
+  end
+
+  def show
+    @track = Track.find(params[:id])
+  end
+
   def new
-    @track = Track.new
-    @circuit = @track.circuit
+    @track = @circuit.tracks.build
   end
 
   def create
-    @track = Track.new(track_params)
+    @track = @circuit.tracks.build(track_params)
 
     if @track.save
       redirect_to @circuit
@@ -15,6 +24,10 @@ class TracksController < ApplicationController
   end
 
   private
+
+  def set_circuit
+    @circuit = Circuit.find(params[:circuit_id]) if params[:circuit_id]
+  end
 
   def track_params
     params.require(:track).permit(:name, :location)

@@ -12,7 +12,7 @@
 <h5>Tracks</h5>
 <% @circuit.tracks.each do |track| %>
   <p>
-    <b>name:</b> <%= track.name %><br>
+    <b>name:</b> <%= link_to track.name, track %><br>
     <b>environment:</b> <%= track.location %>
   </p>
 <% end %>
