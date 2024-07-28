@@ -1,11 +1,21 @@
-<h1>Welcome to</h1>
-<h3><%= @circuit.name %></h3>
+<h4>Welcome to</h4>
+<h1><%= @circuit.name %></h1>
 <h5>Since <%= @circuit.opened %></h5>
 
 <p><%= @circuit.address %></p>
 <p><%= @circuit.website %></p>
 
 <p><%= @circuit.description %></p>
+
+<p><%= link_to "add another track", new_circuit_track_path(@circuit) %></p>
+
+<h5>Tracks</h5>
+<% @circuit.tracks.each do |track| %>
+  <p>
+    <b>name:</b> <%= track.name %><br>
+    <b>environment:</b> <%= track.location %>
+  </p>
+<% end %>
 
 <ul>
   <li><%= link_to "Edit Circuit", edit_circuit_path(@circuit) %></li>
@@ -14,3 +24,8 @@
                 turbo_confirm: "Are you sure?"
             } %></li>
 </ul>
+
+<p>
+  <%= link_to "Circuits", circuits_path %><br>
+  <%= link_to "Home", root_path %>
+</p>

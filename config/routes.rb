@@ -3,7 +3,9 @@ Rails.application.routes.draw do
 
   root "pages#home"
 
-  resources :circuits
+  resources :circuits do
+    resources :tracks
+  end
 
   get "/my_profile" => "my_profile#show"
 

@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_18_050812) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_28_030256) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "circuits", force: :cascade do |t|
     t.string "name"
-    t.date "opened"
+    t.string "opened"
     t.string "website"
     t.string "address"
     t.text "description"
@@ -34,8 +34,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_18_050812) do
   end
 
   create_table "tracks", force: :cascade do |t|
-    t.bigint "circuit_id"
     t.string "name"
+    t.string "location"
+    t.bigint "circuit_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["circuit_id"], name: "index_tracks_on_circuit_id"

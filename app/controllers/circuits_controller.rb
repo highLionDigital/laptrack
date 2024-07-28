@@ -9,6 +9,7 @@ class CircuitsController < ApplicationController
   
   def new
     @circuit = Circuit.new
+    @circuit.tracks.build
   end
 
   def create
@@ -45,7 +46,8 @@ class CircuitsController < ApplicationController
   private
 
   def circuit_params
-    params.require(:circuit).permit(:name, :opened, :website, :adddress, :description)
+    params.require(:circuit).permit(:name, :opened, :website, :address, :description,
+                tracks_attributes: [:id, :name, :location])
   end
 
 end
