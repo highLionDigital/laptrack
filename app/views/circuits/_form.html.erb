@@ -9,7 +9,7 @@
 
   <div>
     <%= form.label :opened %><br>
-    <%= form.date_field :opened %>
+    <%= form.select :opened, (Date.today.year.downto(1960)).to_a, { prompt: "Select year" }, { name: 'circuit[opened]' } %>
   </div>
 
   <div>
@@ -29,6 +29,25 @@
     <%= form.label :description %><br>
     <%= form.text_area :description %>
   </div>
+
+  <div>
+    <h5>Add a track</h5>
+    <%= form.fields_for :tracks do |circuit_track| %>
+      <div>
+        <%= circuit_track.label :name %>
+        <%= circuit_track.text_field :name %>
+      </div>
+
+      <div>
+        <%= circuit_track.label :location %>
+        <%= circuit_track.collection_radio_buttons :location, Track::LOCATIONS, :to_s, :titleize do |b| %>
+          <%= b.radio_button %>
+          <%= b.label %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
 
   <div>
     <%= form.submit %>

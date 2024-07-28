@@ -2,8 +2,11 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   root "pages#home"
+  resources :tracks, only: [:index, :show]
 
-  resources :circuits
+  resources :circuits do
+    resources :tracks
+  end
 
   get "/my_profile" => "my_profile#show"
 

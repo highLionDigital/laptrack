@@ -1,0 +1,16 @@
+<h1>All tracks</h1>
+
+<table>
+  <tr>
+    <th>Track</th>
+    <th>Circuit</th>
+  </tr>
+  <% @tracks.each do |track| %>
+    <tr>
+      <td><%= link_to track.name, track %></td>
+      <td><%= link_to track.circuit.name, track.circuit %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "Back to circuits", circuits_path %></p>
