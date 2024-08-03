@@ -1,4 +1,5 @@
 class TracksController < ApplicationController
+  before_action :require_login, except: [:index, :show]
   before_action :set_circuit, except: :show
 
   def index

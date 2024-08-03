@@ -1,4 +1,4 @@
-<% if current_user %>
+<% if user_signed_in? %>
   <h1>Welcome back, <%= current_user[:name] %> </h1>
   <p><%= link_to 'Click here', my_profile_path %> to go to your driver profile.
 

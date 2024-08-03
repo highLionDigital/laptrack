@@ -1,5 +1,13 @@
 class ApplicationController < ActionController::Base
   helper_method :current_user
+  helper_method :require_login
+  helper_method :user_signed_in?
+
+  private
+
+  def user_signed_in?
+    session[:credentials].present? && session[:credentials][:id_token].present?
+  end
 
   def require_login
     return if current_user
