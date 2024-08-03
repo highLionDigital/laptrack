@@ -1,10 +1,12 @@
 class CircuitsController < ApplicationController
+  before_action :require_login, except: [:index, :show]
+  before_action :set_circuit, except: [:index, :new, :create]
+
   def index
     @circuits = Circuit.all
   end
 
   def show
-    @circuit = Circuit.find(params[:id])
   end
   
   def new
@@ -23,11 +25,9 @@ class CircuitsController < ApplicationController
   end
 
   def edit
-    @circuit = Circuit.find(params[:id])
   end
 
   def update
-    @circuit = Circuit.find(params[:id])
 
     if @circuit.update(circuit_params)
       redirect_to @circuit
@@ -37,13 +37,16 @@ class CircuitsController < ApplicationController
   end
 
   def destroy
-    @circuit = Circuit.find(params[:id])
     @circuit.destroy
 
     redirect_to circuits_path, status: :unprocessable_entity
   end
 
   private
+
+  def set_circuit
+    @circuit = Circuit.find(params[:id])
+  end
 
   def circuit_params
     params.require(:circuit).permit(:name, :opened, :website, :address, :description,
