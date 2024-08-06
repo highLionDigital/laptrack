@@ -1,13 +1,18 @@
 class TracksController < ApplicationController
   before_action :require_login, except: [:index, :show]
-  before_action :set_circuit, except: :show
+  before_action :set_circuit, only: [:index]
 
   def index
     @tracks = @circuit ? @circuit.tracks : Track.all
+    respond_to do |format|
+      format.html
+      format.json { render json: @tracks }
+    end
   end
 
   def show
     @track = Track.find(params[:id])
+    @races = Race.where(track_id: @track.id)
   end
 
   def new

@@ -17,7 +17,8 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    decoded_id_token if session[:credentials]
+    # decoded_id_token if session[:credentials]
+    @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
   end
 
   def decoded_id_token
