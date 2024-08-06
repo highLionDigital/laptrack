@@ -1,0 +1,111 @@
+<%= form_with model: [@race], html: { id: 'race-form' } do |form| %>
+  <div>
+    <%= form.label :circuit_id, 'Circuit' %><br>
+    <%= form.collection_select :circuit_id, Circuit.all, :id, :name, { prompt: 'Select a Circuit' }, { class: 'form-control', id: 'circuit-select' } %>
+  </div>
+
+  <div>
+    <%= form.label :track_id, 'Track' %><br>
+    <%= form.collection_select :track_id, [], :id, :name, { prompt: 'Select a Track' }, { class: 'form-control', id: 'track-select', disabled: true } %>
+  </div>
+
+  <div>
+    <%= form.label :start_time, 'Start Time' %><br>
+    <%= form.datetime_local_field :start_time, class: 'form-control' %>
+  </div>
+
+  <div>
+    <%= form.label :total_laps, 'Total Laps' %><br>
+    <%= form.number_field :total_laps, class: 'form-control' %>
+  </div>
+
+  <div>
+    <%= form.label :best_lap_time, 'Best Lap Time' %><br>
+    <div class="lap-time-input">
+      <%= form.hidden_field :best_lap_time %>
+      <input type="number" min="0" max="99" class="form-control lap-time-part" data-part="minutes" style="width: 50px;"> '
+      <input type="number" min="0" max="59" class="form-control lap-time-part" data-part="seconds" style="width: 50px;"> .
+      <input type="number" min="0" max="999" class="form-control lap-time-part" data-part="milliseconds" style="width: 60px;">
+      <span class="lap-time-display"></span>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :avg_lap_time, 'Average Lap Time' %><br>
+    <div class="lap-time-input">
+      <%= form.hidden_field :avg_lap_time %>
+      <input type="number" min="0" max="99" class="form-control lap-time-part" data-part="minutes" style="width: 50px;"> '
+      <input type="number" min="0" max="59" class="form-control lap-time-part" data-part="seconds" style="width: 50px;"> .
+      <input type="number" min="0" max="999" class="form-control lap-time-part" data-part="milliseconds" style="width: 60px;">
+      <span class="lap-time-display"></span>
+    </div>
+  </div>
+
+  <div>
+    <%= form.submit 'Submit', class: 'btn btn-primary' %>
+  </div>
+<% end %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', initializeRaceForm);
+  document.addEventListener('turbolinks:load', initializeRaceForm);
+
+  function initializeRaceForm() {
+    const form = document.getElementById('race-form');
+    if (!form) return;
+
+    const circuitSelect = document.getElementById('circuit-select');
+    const trackSelect = document.getElementById('track-select');
+
+    circuitSelect.addEventListener('change', function() {
+      const circuitId = this.value;
+      if (circuitId) {
+        fetch(`/circuits/${circuitId}/tracks.json`)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(tracks => {
+            console.log('Tracks received:', tracks);
+            trackSelect.innerHTML = '<option value="">Select a Track</option>';
+            tracks.forEach(track => {
+              const option = new Option(track.name, track.id);
+              trackSelect.add(option);
+            });
+            trackSelect.disabled = false;
+          })
+          .catch(error => {
+            console.error('There was a problem fetching the tracks:', error);
+            trackSelect.innerHTML = '<option value="">Error loading tracks</option>';
+            trackSelect.disabled = true;
+          });
+      } else {
+        trackSelect.innerHTML = '<option value="">Select a Track</option>';
+        trackSelect.disabled = true;
+      }
+    });
+
+    // Lap time input handling
+    const lapTimeInputs = document.querySelectorAll('.lap-time-input');
+    lapTimeInputs.forEach(lapTimeInput => {
+      const parts = lapTimeInput.querySelectorAll('.lap-time-part');
+      const hiddenInput = lapTimeInput.querySelector('input[type="hidden"]');
+      const display = lapTimeInput.querySelector('.lap-time-display');
+
+      parts.forEach(part => {
+        part.addEventListener('input', updateLapTime);
+      });
+
+      function updateLapTime() {
+        const minutes = parts[0].value.padStart(2, '0');
+        const seconds = parts[1].value.padStart(2, '0');
+        const milliseconds = parts[2].value.padStart(3, '0');
+        const lapTime = `${minutes}:${seconds}.${milliseconds}`;
+        hiddenInput.value = lapTime;
+        display.textContent = lapTime;
+      }
+    });
+  }
+</script>

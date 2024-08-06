@@ -1,4 +1,26 @@
 <h1><%= @track.name %></h1>
 <p><%= @track.circuit.name %></p>
 
+<table>
+  <tr>
+    <th>Driver</th>
+    <th>Start Time</th>
+    <th>Total Laps</th>
+    <th>Best Lap Time</th>
+    <th>Avg Lap Time</th>
+    <th>Actions</th>
+  </tr>
+  <% @races.each do |race| %>
+    <tr>
+      <td><%= race.driver.id %></td>
+      <td><%= race.start_time.strftime("%H:%M:%S") %></td>
+      <td><%= race.total_laps %></td>
+      <td><%= race.best_lap_time %></td>
+      <td><%= race.avg_lap_time %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "Add Race", new_race_path %></p>
+
 <p><%= link_to "Back to tracks", tracks_path %></p>

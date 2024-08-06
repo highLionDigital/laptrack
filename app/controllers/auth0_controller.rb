@@ -14,6 +14,12 @@ class Auth0Controller < ApplicationController
       user.email = auth_info[:info][:email]
     end
 
+    # Ensure driver exists
+    user.driver ||= user.create_driver(bio: "No bio yet", country: "Unknown")
+
+    # Set user_id in session
+    session[:user_id] = user.id
+
     # Redirect to the URL you want after successful auth
     redirect_to my_profile_path
   end
