@@ -1,12 +1,16 @@
 <%= form_with model: [@race], html: { id: 'race-form' } do |form| %>
   <div>
     <%= form.label :circuit_id, 'Circuit' %><br>
-    <%= form.collection_select :circuit_id, Circuit.all, :id, :name, { prompt: 'Select a Circuit' }, { class: 'form-control', id: 'circuit-select' } %>
+    <%= form.collection_select :circuit_id, Circuit.all, :id, :name, 
+                               { prompt: 'Select a Circuit', selected: @circuit&.id }, 
+                               { class: 'form-control', id: 'circuit-select' } %>
   </div>
 
   <div>
     <%= form.label :track_id, 'Track' %><br>
-    <%= form.collection_select :track_id, [], :id, :name, { prompt: 'Select a Track' }, { class: 'form-control', id: 'track-select', disabled: true } %>
+    <%= form.collection_select :track_id, @circuit ? @circuit.tracks : [], :id, :name, 
+                               { prompt: 'Select a Track', selected: @track&.id }, 
+                               { class: 'form-control', id: 'track-select', disabled: @circuit.nil? } %>
   </div>
 
   <div>
@@ -57,8 +61,7 @@
     const circuitSelect = document.getElementById('circuit-select');
     const trackSelect = document.getElementById('track-select');
 
-    circuitSelect.addEventListener('change', function() {
-      const circuitId = this.value;
+    function updateTracks(circuitId, selectedTrackId = null) {
       if (circuitId) {
         fetch(`/circuits/${circuitId}/tracks.json`)
           .then(response => {
@@ -73,6 +76,9 @@
             tracks.forEach(track => {
               const option = new Option(track.name, track.id);
               trackSelect.add(option);
+              if (selectedTrackId && track.id == selectedTrackId) {
+                option.selected = true;
+              }
             });
             trackSelect.disabled = false;
           })
@@ -84,6 +90,24 @@
       } else {
         trackSelect.innerHTML = '<option value="">Select a Track</option>';
         trackSelect.disabled = true;
+      }
+    }
+
+    circuitSelect.addEventListener('change', function() {
+      updateTracks(this.value);
+    });
+
+    // If a circuit is pre-selected, load its tracks and pre-select the track
+    if (circuitSelect.value) {
+      const preSelectedTrackId = trackSelect.value;
+      updateTracks(circuitSelect.value, preSelectedTrackId);
+    }
+
+    // Add this event listener to update the hidden track_id field
+    trackSelect.addEventListener('change', function() {
+      const hiddenTrackIdField = document.querySelector('input[name="race[track_id]"]');
+      if (hiddenTrackIdField) {
+        hiddenTrackIdField.value = this.value;
       }
     });
 
@@ -99,10 +123,31 @@
       });
 
       function updateLapTime() {
-        const minutes = parts[0].value.padStart(2, '0');
-        const seconds = parts[1].value.padStart(2, '0');
-        const milliseconds = parts[2].value.padStart(3, '0');
-        const lapTime = `${minutes}:${seconds}.${milliseconds}`;
+        let minutes = parseInt(parts[0].value) || 0;
+        let seconds = parseInt(parts[1].value) || 0;
+        let milliseconds = parseInt(parts[2].value) || 0;
+
+        // Handle overflow
+        if (milliseconds >= 1000) {
+          seconds += Math.floor(milliseconds / 1000);
+          milliseconds %= 1000;
+        }
+        if (seconds >= 60) {
+          minutes += Math.floor(seconds / 60);
+          seconds %= 60;
+        }
+
+        // Update input fields with corrected values
+        parts[0].value = minutes;
+        parts[1].value = seconds;
+        parts[2].value = milliseconds;
+
+        // Format for display
+        const formattedMinutes = minutes.toString().padStart(2, '0');
+        const formattedSeconds = seconds.toString().padStart(2, '0');
+        const formattedMilliseconds = milliseconds.toString().padStart(3, '0');
+
+        const lapTime = `${formattedMinutes}:${formattedSeconds}.${formattedMilliseconds}`;
         hiddenInput.value = lapTime;
         display.textContent = lapTime;
       }

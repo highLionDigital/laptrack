@@ -8,7 +8,6 @@
     <th>Total Laps</th>
     <th>Best Lap Time</th>
     <th>Avg Lap Time</th>
-    <th>Actions</th>
   </tr>
   <% @races.each do |race| %>
     <tr>
@@ -21,6 +20,6 @@
   <% end %>
 </table>
 
-<p><%= link_to "Add Race", new_race_path %></p>
+<p><%= link_to "Add Race", new_race_path(track_id: @track.id) %></p>
 
 <p><%= link_to "Back to tracks", tracks_path %></p>

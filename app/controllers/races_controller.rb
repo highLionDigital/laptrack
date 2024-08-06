@@ -1,11 +1,15 @@
 class RacesController < ApplicationController
   before_action :require_login
-  # before_action :authorize_driver, only: [:create]
+  before_action :authorize_driver, only: [:create]
   before_action :authorize_race, only: [:destroy]
 
   def new
     @race = Race.new
-    @driver = current_user.driver
+    if params[:track_id]
+      @track = Track.find(params[:track_id])
+      @race.track = @track
+      @circuit = @track.circuit
+    end
   end
 
   def create
