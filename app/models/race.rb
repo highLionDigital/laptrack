@@ -1,6 +1,6 @@
 class Race < ApplicationRecord
     belongs_to :driver
-    belongs_to :track
+    belongs_to :track, dependent: :destroy
 
     validates :start_time, presence: true
     validates :total_laps, presence: true, numericality: { only_integer: true, greater_than: 0 }

@@ -19,7 +19,6 @@ class RacesController < ApplicationController
     if @race.save
       redirect_to track_path(@race.track), notice: 'Race was successfully added.'
     else
-      Rails.logger.debug "Race errors: #{@race.errors.full_messages}"
       render :new, status: :unprocessable_entity
     end
   end
