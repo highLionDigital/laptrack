@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root "pages#home"
 
+  resources :drivers, only: [:index, :show]
   resources :races, only: [:index, :new, :create]
   resources :tracks, only: [:index, :show]
 
@@ -9,7 +10,7 @@ Rails.application.routes.draw do
     resources :tracks
   end
 
-  get "/my_profile" => "my_profile#show"
+  resource :my_profile, only: [:show, :edit, :update], controller: 'my_profile'
 
   scope :auth do
     get "failure" => "auth0#failure"

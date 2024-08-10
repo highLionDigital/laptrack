@@ -1,0 +1,12 @@
+<h1><%= @driver.alias %></h1>
+
+<div class="driver-info">
+  <h3>Driver Information</h3>
+  <%= image_tag(@driver.user.picture, alt: "Profile Picture", class: "profile-picture") if @driver.user.picture.present? %>
+
+  <table>
+    <tr><td>Alias:</td><td><%= @driver.user.name %></td></tr>
+    <tr><td>Country:</td><td><%= @driver.country %></td></tr>
+    <tr><td>Bio:</td><td><%= @driver.bio %></td></tr>
+  </table>
+</div>
