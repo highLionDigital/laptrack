@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   helper_method :current_user
+  helper_method :current_driver
   helper_method :require_login
   helper_method :user_signed_in?
 
@@ -19,6 +20,10 @@ class ApplicationController < ActionController::Base
   def current_user
     # decoded_id_token if session[:credentials]
     @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+  end
+
+  def current_driver
+    @current_driver ||= Driver.find_by(id: session[:driver_id]) if session[:driver_id]
   end
 
   def decoded_id_token

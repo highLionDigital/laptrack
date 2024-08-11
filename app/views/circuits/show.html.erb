@@ -25,6 +25,34 @@
             } %></li>
 </ul>
 
+<h4>Comments</h4>
+<% @circuit.comments.each do |comment| %>
+  <p>
+    <em>Commenter:</em>
+    <%= comment.commenter %>
+  </p>
+
+  <p>
+    <em>Comment:</em>
+    <%= comment.body %>
+  </p>
+<% end %>
+
+<h5>Add a comment:</h5>
+<%= form_with model: [ @circuit, @circuit.comments.build ] do |form| %>
+  <p>
+    <%= form.label :commenter %><br>
+    <%= form.text_field :commenter, value: current_user.driver.alias, disabled: true %>
+  </p>
+  <p>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
+
 <p>
   <%= link_to "Circuits", circuits_path %><br>
   <%= link_to "Home", root_path %>
