@@ -26,7 +26,4 @@ class MyProfileController < ApplicationController
     params.require(:driver).permit(:alias, :dob, :country, :bio)
   end
 
-  def user_params
-    current_user.slice(:nickname, :name, :picture, :updated_at, :email, :email_verified, :sub)
-  end
 end

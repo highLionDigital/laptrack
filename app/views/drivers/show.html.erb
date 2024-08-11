@@ -5,8 +5,32 @@
   <%= image_tag(@driver.user.picture, alt: "Profile Picture", class: "profile-picture") if @driver.user.picture.present? %>
 
   <table>
-    <tr><td>Alias:</td><td><%= @driver.user.name %></td></tr>
+    <tr><td>Name:</td><td><%= @driver.user.name %></td></tr>
     <tr><td>Country:</td><td><%= @driver.country %></td></tr>
     <tr><td>Bio:</td><td><%= @driver.bio %></td></tr>
+  </table>
+</div>
+
+<div>
+  <h3>Races</h3>
+  <table>
+    <tr>
+      <th>Race Date</th>
+      <th>Total Laps</th>
+      <th>Best Lap Time</th>
+      <th>Average Lap Time</th>
+      <th>Track</th>
+      <th>Circuit</th>
+    </tr>
+    <% @driver.races.each do |race| %>
+      <tr>
+        <td><%= race.start_time.strftime("%Y%m%d") %></td>
+        <td><%= race.total_laps %></td>
+        <td><%= race.best_lap_time %></td>
+        <td><%= race.avg_lap_time %></td>
+        <td><%= race.track.name %></td>
+        <td><%= race.circuit.name %></td>
+      </tr>
+    <% end %>
   </table>
 </div>

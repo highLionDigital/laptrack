@@ -30,5 +30,25 @@
 </div>
 
 <div>
-  <h2>Your races</h2>
+  <h2>My races</h2>
+  <table>
+    <tr>
+      <th>Race Date</th>
+      <th>Total Laps</th>
+      <th>Best Lap Time</th>
+      <th>Average Lap Time</th>
+      <th>Track</th>
+      <th>Circuit</th>
+    </tr>
+    <% @current_driver.races.each do |race| %>
+      <tr>
+        <td><%= race.start_time.strftime("%Y%m%d") %></td>
+        <td><%= race.total_laps %></td>
+        <td><%= race.best_lap_time %></td>
+        <td><%= race.avg_lap_time %></td>
+        <td><%= race.track.name %></td>
+        <td><%= race.circuit.name %></td>
+      </tr>
+    <% end %>
+  </table>
 </div>
