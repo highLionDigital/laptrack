@@ -1,16 +1,28 @@
 <div>
-  <h2>This is your profile page, <%= current_user[:nickname] %></h2>
-  <p>Go back <%= link_to "home", root_path %></p>
-  <h4>User account information:</h4>
-  <table>
-    <tr><td><%= image_tag("#{current_user[:picture]}") %></td><td>Name: <%= current_user[:name] %></td></tr>
-    <tr><td></td><td>Nickname: <%= current_user[:nickname] %></td></tr>
-    <tr><td></td><td>Email: <%= current_user[:email] %></td></tr>
-  </table>
-  <p>
-    Full profile info:<br>
-    <%= JSON.pretty_generate(current_user) %>
-  </p>
+  <h2>Welcome to your profile, <%= current_user.name %></h2>
+  <p><%= link_to "Back to Home", root_path %></p>
+
+  <div class="profile-info">
+    <h3>User Information</h3>
+    <%= image_tag(current_user.picture, alt: "Profile Picture", class: "profile-picture") if current_user.picture.present? %>
+    <table>
+      <tr><td>Email:</td><td><%= current_user.email %></td></tr>
+      <tr><td>Email Verified:</td><td><%= current_user.email_verified ? "Yes" : "No" %></td></tr>
+      <tr><td>Last Updated:</td><td><%= current_user.updated_at.strftime("%B %d, %Y") %></td></tr>
+    </table>
+  </div>
+
+  <div class="driver-info">
+    <h3>Driver Information</h3>
+    <table>
+      <tr><td>Alias:</td><td><%= @current_driver.alias %></td></tr>
+      <tr><td>Date of Birth:</td><td><%= @current_driver.dob.strftime("%B %d, %Y") if @current_driver.dob.present? %></td></tr>
+      <tr><td>Bio:</td><td><%= @current_driver.bio %></td></tr>
+      <tr><td>Country:</td><td><%= @current_driver.country %></td></tr>
+    </table>
+  </div>
+
+  <p><%= link_to "Edit Profile", edit_my_profile_path if defined?(edit_my_profile_path) %></p>
 </div>
 
 <div>
@@ -18,5 +30,25 @@
 </div>
 
 <div>
-  <h2>Your races</h2>
+  <h2>My races</h2>
+  <table>
+    <tr>
+      <th>Race Date</th>
+      <th>Total Laps</th>
+      <th>Best Lap Time</th>
+      <th>Average Lap Time</th>
+      <th>Track</th>
+      <th>Circuit</th>
+    </tr>
+    <% @current_driver.races.each do |race| %>
+      <tr>
+        <td><%= race.start_time.strftime("%Y%m%d") %></td>
+        <td><%= race.total_laps %></td>
+        <td><%= race.best_lap_time %></td>
+        <td><%= race.avg_lap_time %></td>
+        <td><%= race.track.name %></td>
+        <td><%= race.circuit.name %></td>
+      </tr>
+    <% end %>
+  </table>
 </div>

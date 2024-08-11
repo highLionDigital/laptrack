@@ -10,9 +10,13 @@ class Auth0Controller < ApplicationController
     session[:credentials] = {}
     session[:credentials][:id_token] = auth_info['credentials']['id_token']
 
-    user = User.find_or_create_by(auth0_id: auth_info[:uid]) do |user|
-      user.email = auth_info[:info][:email]
-    end
+    user = User.find_or_initialize_by(auth0_id: auth_info['uid'])
+    user.assign_attributes(
+      email: auth_info['info']['email'],
+      name: auth_info['info']['name'],
+      picture: auth_info['info']['image'],
+      email_verified: auth_info['extra']['raw_info']['email_verified']
+    )
 
     # Ensure driver exists
     user.driver ||= user.create_driver(bio: "No bio yet", country: "Unknown")

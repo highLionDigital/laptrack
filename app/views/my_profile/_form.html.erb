@@ -1,0 +1,25 @@
+<%= form_with model: @driver do |form| %>
+
+  <div>
+    <%= form.label :alias %>
+    <%= form.text_field :alias %>
+  </div>
+
+  <div>
+    <%= form.label :dob %>
+    <%= form.date_field :dob %>
+  </div>
+
+  <div>
+    <%= form.label :country %>
+    <%= form.text_field :country %>
+  </div>
+
+  <div>
+    <%= form.label :bio %>
+    <%= form.text_area :bio %>
+  </div>
+
+  <%= form.submit "Save" %>
+
+<% end %>
