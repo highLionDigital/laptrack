@@ -25,6 +25,12 @@
             } %></li>
 </ul>
 
+<h4>Comments</h4>
+<%= render @circuit.comments %>
+
+<h5>Add a comment:</h5>
+<%= render "comments/form", circuit: @circuit %>
+
 <p>
   <%= link_to "Circuits", circuits_path %><br>
   <%= link_to "Home", root_path %>

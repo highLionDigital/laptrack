@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :tracks, only: [:index, :show]
 
   resources :circuits do
+    resources :comments
     resources :tracks
   end
 
