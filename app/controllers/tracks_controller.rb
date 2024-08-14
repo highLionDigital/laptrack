@@ -1,6 +1,6 @@
 class TracksController < ApplicationController
   before_action :require_login, except: [:index, :show]
-  before_action :set_circuit, only: [:index]
+  before_action :set_circuit, only: [:index, :new, :create]
 
   def index
     @tracks = @circuit ? @circuit.tracks : Track.all

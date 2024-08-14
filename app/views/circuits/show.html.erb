@@ -2,14 +2,15 @@
 <h1><%= @circuit.name %></h1>
 <h5>Since <%= @circuit.opened %></h5>
 
-<p><%= @circuit.address %></p>
-<p><%= @circuit.website %></p>
+<p>
+  <%= @circuit.address %></br>
+  <%= @circuit.website %></br>
+</p>
 
 <p><%= @circuit.description %></p>
 
-<p><%= link_to "add another track", new_circuit_track_path(@circuit) %></p>
-
 <h5>Tracks</h5>
+<p><%= link_to "add another track", new_circuit_track_path(@circuit) %></p>
 <% @circuit.tracks.each do |track| %>
   <p>
     <b>name:</b> <%= link_to track.name, track %><br>
@@ -30,8 +31,3 @@
 
 <h5>Add a comment:</h5>
 <%= render "comments/form", circuit: @circuit %>
-
-<p>
-  <%= link_to "Circuits", circuits_path %><br>
-  <%= link_to "Home", root_path %>
-</p>
