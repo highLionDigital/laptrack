@@ -1,0 +1,18 @@
+<div>
+  <ul>
+    <li><%= link_to "Home", root_path %></li>
+    <li><%= link_to "Circuits", circuits_path %></li>
+    <li><%= link_to "Tracks", tracks_path %></li>
+    <li><%= link_to "Drivers", drivers_path %></li>
+  </ul>
+  <ul>
+    <% if user_signed_in? %>
+      <!-- Place a logout button anywhere on your application -->
+      <li><%= link_to 'Log Out', logout_path, method: :get, data: {turbo: "false"} %></li>
+    <% else %>
+      <!-- Place a login button anywhere on your application -->
+      <li><%= link_to 'Log In', '/auth/auth0', params: {prompt: 'login'}, data: {turbo: "false"} %></li>
+      <li><%= link_to 'Sign Up', '/auth/auth0', params: {prompt: 'login', screen_hint: 'signup'}, data: {turbo: "false"} %></li>
+    <% end %>
+  </ul>
+</div>

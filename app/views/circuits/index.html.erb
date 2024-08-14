@@ -1,4 +1,5 @@
 <h1>Circuits</h1>
+<p><%= link_to "Add a Circuit", new_circuit_path %></p>
 
 <ul>
   <% @circuits.each do |circuit| %>
@@ -7,7 +8,3 @@
     </li>
   <% end %>
 </ul>
-
-<p><%= link_to "View all tracks", tracks_path %></p>
-<p><%= link_to "Add a Circuit", new_circuit_path %></p>
-<p><%= link_to "Home", root_path %></p>

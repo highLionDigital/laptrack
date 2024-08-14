@@ -1,4 +1,6 @@
 class DriversController < ApplicationController
+  before_action :require_login
+  
   def index
     @drivers = Driver.all
   end
