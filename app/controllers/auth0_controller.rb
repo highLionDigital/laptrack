@@ -39,6 +39,7 @@ class Auth0Controller < ApplicationController
   end
 
   def login
+    redirect_to '/auth/auth0'
   end
 
   private

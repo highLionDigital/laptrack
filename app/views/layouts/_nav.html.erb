@@ -12,8 +12,8 @@
     <% else %>
       <!-- Place a login button anywhere on your application -->
       <!-- <li><%= link_to 'Log In', '/auth/auth0', params: {prompt: 'login'}, data: {turbo: "false"} %></li> -->
-      <li><%= link_to 'Log In', '/auth/auth0', method: :post, data: { turbo: false } %></li>
-      <li><%= link_to 'Sign Up', '/auth/auth0', params: {prompt: 'login', screen_hint: 'signup'}, data: {turbo: "false"} %></li>
+      <li><%= button_to 'Log In', '/auth/auth0', method: :post, data: { turbo: false } %></li>
+      <li><%= button_to 'Sign Up', '/auth/auth0', method: :post, params: {screen_hint: 'signup'}, data: { turbo: false } %></li>
     <% end %>
   </ul>
 </div>
