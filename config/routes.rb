@@ -22,4 +22,6 @@ Rails.application.routes.draw do
     end
   end
 
+  post '/auth/auth0', to: 'auth0#login'
+
 end

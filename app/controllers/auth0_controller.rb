@@ -38,6 +38,9 @@ class Auth0Controller < ApplicationController
     redirect_to logout_url, allow_other_host: true
   end
 
+  def login
+  end
+
   private
   AUTH0_CONFIG = Rails.application.config_for(:auth0)
 
