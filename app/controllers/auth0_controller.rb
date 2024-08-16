@@ -1,11 +1,5 @@
 class Auth0Controller < ApplicationController
   def callback
-    # OmniAuth stores the informatin returned from
-    # Auth0 and the IdP in request.env['omniauth.auth'].
-    # In this code, you will pull the raw_info supplied 
-    # from the id_token and assign it to the session.
-    # Refer to https://github.com/auth0/omniauth-auth0/blob/master/EXAMPLES.md#example-of-the-resulting-authentication-hash 
-    # for complete information on 'omniauth.auth' contents.
     auth_info = request.env['omniauth.auth']
     session[:credentials] = {}
     session[:credentials][:id_token] = auth_info['credentials']['id_token']
@@ -18,14 +12,19 @@ class Auth0Controller < ApplicationController
       email_verified: auth_info['extra']['raw_info']['email_verified']
     )
 
-    # Ensure driver exists
-    user.driver ||= user.create_driver(bio: "No bio yet", country: "Unknown")
+    if user.save
+      # Ensure driver exists (this will trigger the after_create callback if it's a new user)
+      user.ensure_driver_exists
 
-    # Set user_id in session
-    session[:user_id] = user.id
+      # Set user_id in session
+      session[:user_id] = user.id
 
-    # Redirect to the URL you want after successful auth
-    redirect_to my_profile_path
+      # Redirect to the URL you want after successful auth
+      redirect_to my_profile_path
+    else
+      # Handle the case where user couldn't be saved
+      redirect_to root_path, alert: "Error creating user. Please try again."
+    end
   end
 
   def failure
