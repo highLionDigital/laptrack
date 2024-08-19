@@ -29,5 +29,7 @@
 <h4>Comments</h4>
 <%= render @circuit.comments %>
 
-<h5>Add a comment:</h5>
-<%= render "comments/form", circuit: @circuit %>
+<% if user_signed_in? %>
+  <h5>Add a comment:</h5>
+  <%= render "comments/form", circuit: @circuit %>
+<% end %>

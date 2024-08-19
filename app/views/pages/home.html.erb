@@ -1,5 +1,5 @@
 <% if user_signed_in? %>
-  <h1>Welcome back, <%= current_user.name %> </h1>
+  <h1>Welcome back, <%= current_user.name || current_user.email %> </h1>
   <%= button_to "My Profile", my_profile_path, method: :get %>
 
 <% else %>
