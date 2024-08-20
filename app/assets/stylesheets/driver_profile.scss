@@ -1,0 +1,115 @@
+// CSS for my_profile and driver profile pages
+.driver-profile {
+  padding: 3%;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  border-radius: 0.5rem;
+  background: #fff;
+}
+
+.profile-img {
+  text-align: center;
+
+  img {
+    width: 70%;
+    height: auto;
+  }
+
+  .file {
+    position: relative;
+    overflow: hidden;
+    margin-top: -20%;
+    width: 70%;
+    border: none;
+    border-radius: 0;
+    font-size: 0.875rem;
+    background: rgba(33, 37, 41, 0.72);
+
+    input {
+      position: absolute;
+      opacity: 0;
+      right: 0;
+      top: 0;
+    }
+  }
+}
+
+.profile-head {
+  h5 { 
+    color: #333; 
+  }
+  h6 { 
+    color: #0d6efd; 
+  }
+}
+
+.profile-edit-btn {
+  border: none;
+  border-radius: 1.5rem;
+  width: 70%;
+  padding: 2%;
+  font-weight: 600;
+  color: #6c757d;
+  cursor: pointer;
+}
+
+.profile-rating {
+  font-size: 0.75rem;
+  color: #6c757d;
+  margin-top: 5%;
+
+  span {
+    color: #495057;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+}
+
+.profile-head .nav-tabs {
+  margin-bottom: 5%;
+
+  .nav-link {
+    font-weight: 600;
+    border: none;
+
+    &.active {
+      border: none;
+      border-bottom: 2px solid #0d6efd;
+    }
+  }
+}
+
+.profile-work {
+  padding: 14%;
+  margin-top: -15%;
+
+  p {
+    font-size: 0.75rem;
+    color: #6c757d;
+    font-weight: 600;
+    margin-top: 10%;
+  }
+
+  a {
+    text-decoration: none;
+    color: #495057;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+}
+
+.profile-tab {
+  label {
+    font-weight: 600;
+  }
+
+  p {
+    font-weight: 600;
+    color: #0d6efd;
+  }
+}
