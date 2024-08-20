@@ -20,7 +20,7 @@
         </li>
         <% if user_signed_in? %>
           <li class="nav-item">
-            <%= link_to "My Profile", my_profile_path, class: "nav-link" %>
+            <%= button_to "Add a Race", new_race_path, method: :get, class: "btn btn-primary" %>
           </li>
         <% end %>
       </ul>
@@ -30,6 +30,7 @@
             <%= image_tag current_user.picture, alt: "User profile picture", width: 48, height: 48, class: "rounded-circle" %>
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li><%= link_to 'My Profile', my_profile_path, class: "dropdown-item" %></li>
             <li><%= link_to 'Log Out', logout_path, method: :get, class: "dropdown-item", data: {turbo: "false"} %></li>
           </ul>
         </div>
