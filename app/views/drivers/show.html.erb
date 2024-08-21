@@ -1,36 +1,98 @@
-<h1><%= @driver.alias %></h1>
-
-<div class="driver-info">
-  <h3>Driver Information</h3>
-  <%= image_tag(@driver.user.picture, alt: "Profile Picture", class: "profile-picture") if @driver.user.picture.present? %>
-
-  <table>
-    <tr><td>Name:</td><td><%= @driver.user.name %></td></tr>
-    <tr><td>Country:</td><td><%= @driver.country %></td></tr>
-    <tr><td>Bio:</td><td><%= @driver.bio %></td></tr>
-  </table>
-</div>
-
-<div>
-  <h3>Races</h3>
-  <table>
-    <tr>
-      <th>Race Date</th>
-      <th>Total Laps</th>
-      <th>Best Lap Time</th>
-      <th>Average Lap Time</th>
-      <th>Track</th>
-      <th>Circuit</th>
-    </tr>
-    <% @driver.races.each do |race| %>
-      <tr>
-        <td><%= race.start_time.strftime("%Y%m%d") %></td>
-        <td><%= race.total_laps %></td>
-        <td><%= race.best_lap_time %></td>
-        <td><%= race.avg_lap_time %></td>
-        <td><%= race.track.name %></td>
-        <td><%= race.circuit.name %></td>
-      </tr>
-    <% end %>
-  </table>
+<div class="container driver-profile">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="profile-img">
+        <%= image_tag(@driver.user.picture, alt: "Profile Picture", class: "img-fluid") if @driver.user.picture.present? %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="profile-head">
+        <h3>
+          <%= @driver.alias %>
+        </h3>
+        <h6>
+          <%= @driver.user.name %>
+        </h6>
+        <p class="profile-rating">
+          Total Races : <span><%= @driver.races.count %></span>
+        </p>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Recent Races</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">All Races</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <p> Placeholder </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="profile-work">
+        <p>DRIVER INFO</p>
+        <p class="profile-rating">
+          Country: <%= @driver.country %><br>
+          Bio: <%= @driver.bio %>
+        </p>
+        <p>SOCIALS</p>
+        <a href="">YouTube</a><br/>
+        <a href="">Twitch</a><br/>
+        <a href="">Twitter</a><br/>
+        <a href="">Instagram</a><br/>
+        <a href="">Facebook</a><br/>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="tab-content profile-tab" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+          <table class="table">
+            <tr>
+              <th>Race Date</th>
+              <th>Tot. Laps</th>
+              <th>Best Lap</th>
+              <th>Avg. Lap</th>
+              <th>Track</th>
+              <th>Circuit</th>
+            </tr>
+            <% @driver.races.order(start_time: :desc).limit(5).each do |race| %>
+              <tr>
+                <td><%= race.start_time.strftime("%Y%m%d") %></td>
+                <td><%= race.total_laps %></td>
+                <td><%= race.best_lap_time %></td>
+                <td><%= race.avg_lap_time %></td>
+                <td><%= race.track.name %></td>
+                <td><%= race.circuit.name %></td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+          <table class="table">
+            <tr>
+              <th>Race Date</th>
+              <th>Tot. Laps</th>
+              <th>Best Lap</th>
+              <th>Avg. Lap</th>
+              <th>Track</th>
+              <th>Circuit</th>
+            </tr>
+            <% @driver.races.order(start_time: :desc).each do |race| %>
+              <tr>
+                <td><%= race.start_time.strftime("%Y%m%d") %></td>
+                <td><%= race.total_laps %></td>
+                <td><%= race.best_lap_time %></td>
+                <td><%= race.avg_lap_time %></td>
+                <td><%= race.track.name %></td>
+                <td><%= race.circuit.name %></td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
