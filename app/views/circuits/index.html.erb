@@ -1,10 +1,31 @@
-<h1>Circuits</h1>
-<p><%= link_to "Add a Circuit", new_circuit_path %></p>
+<div class="container px-4 py-5" id="custom-cards">
+  <h2 class="pb-2 border-bottom">Circuits</h2>
+  <%= link_to "Add a Circuit", new_circuit_path, class: "btn btn-primary" if user_signed_in? %>
 
-<ul>
-  <% @circuits.each do |circuit| %>
-    <li>
-      <%= link_to circuit.name, circuit %>
-    </li>
-  <% end %>
-</ul>
+  <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+
+    <% @circuits.each do |circuit| %>
+      <div class="col">
+        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('https://images.ctfassets.net/bdy3auwr3mqe/1SdjvuNrTRZPxOUcoxpkLL/609557f05fcbb6ed8386c990920e357a/DSC07183.jpg?w=600&fit=fill&q=90');">
+          <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold"><%= link_to circuit.name, circuit, class: "text-white link-light" %></h3>
+            <ul class="d-flex list-unstyled mt-auto">
+              <li class="me-auto">
+                <%= image_tag("https://github.com/twbs.png", alt: "Bootstrap", width: 32, height: 32, class: "rounded-circle border border-white") %>
+              </li>
+              <li class="d-flex align-items-center me-3">
+                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
+                <small><%= circuit.address %></small>
+              </li>
+              <li class="d-flex align-items-center">
+                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"/></svg>
+                <small><%= circuit.tracks.count %></small>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    
+  </div>
+</div>

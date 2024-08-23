@@ -1,0 +1,59 @@
+
+
+.container {
+  background-color: #f2f2f2;
+  padding: 20px;
+  border-radius: 4px;
+  border-bottom: 4px solid #ddd;
+}
+
+#circuit-details .card-body img {
+  border-radius: 100%;
+  border: 5px solid #ecf0f1;
+  margin-bottom: 10px;
+}
+
+#circuit-details .social-links a {
+  width: 30px;
+  height: 30px;
+  border: 2px solid #bdc3c7;
+  color: #bdc3c7;
+  padding-top: 6px;
+  margin-top: 10px;
+}
+
+.card .card-header {
+  background-color: #fff;
+}
+
+#photos img {
+  max-height: 450px;
+  width: 100%;
+  object-fit: cover;
+}
+
+// Additional styles to match Bootstrap 5
+.nav-pills .nav-link {
+  color: #495057;
+}
+
+.nav-pills .nav-link.active {
+  background-color: #0d6efd;
+  color: #fff;
+}
+
+.tab-content {
+  padding-top: 20px;
+}
+
+.badge {
+  font-size: 0.9em;
+}
+
+.btn-outline-primary,
+.btn-outline-info,
+.btn-outline-danger,
+.btn-outline-secondary {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}

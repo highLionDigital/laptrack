@@ -1,35 +1,120 @@
-<h4>Welcome to</h4>
-<h1><%= @circuit.name %></h1>
-<h5>Since <%= @circuit.opened %></h5>
-
-<p>
-  <%= @circuit.address %></br>
-  <%= @circuit.website %></br>
-</p>
-
-<p><%= @circuit.description %></p>
-
-<h5>Tracks</h5>
-<p><%= link_to "add another track", new_circuit_track_path(@circuit) %></p>
-<% @circuit.tracks.each do |track| %>
-  <p>
-    <b>name:</b> <%= link_to track.name, track %><br>
-    <b>environment:</b> <%= track.location %>
-  </p>
-<% end %>
-
-<ul>
-  <li><%= link_to "Edit Circuit", edit_circuit_path(@circuit) %></li>
-  <li><%= link_to "Delete Circuit", circuit_path(@circuit), data: {
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <h2 class="mb-4"><%= @circuit.name %></h2>
+      <p>
+        <% if user_signed_in? %>
+          <%= link_to "Edit Circuit", edit_circuit_path(@circuit) %><br>
+          <%= link_to "Delete Circuit", circuit_path(@circuit), data: {
                 turbo_method: :delete,
                 turbo_confirm: "Are you sure?"
-            } %></li>
-</ul>
+            } %>
+        <% end %>
+      </p>
+    </div>
+  </div>
 
-<h4>Comments</h4>
-<%= render @circuit.comments %>
-
-<% if user_signed_in? %>
-  <h5>Add a comment:</h5>
-  <%= render "comments/form", circuit: @circuit %>
-<% end %>
+  <div class="row" id="circuit-details">
+    <div class="col-lg-4 col-md-4 col-12 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title text-center"><%= @circuit.address %></h5>
+        </div>
+        <div class="card-body text-center">
+          <%= image_tag "https://img.freepik.com/premium-photo/aerial-view-lit-car-race-track-night-created-using-generative-ai-technology_772924-8071.jpg", class: "img-fluid mb-3", alt: "Circuit Manager" %>
+          <h3><%= @circuit.website %></h3>
+          <span class="badge bg-warning text-dark mb-3"><%= @circuit.opened %></span>
+          <p><%= @circuit.description %></p>
+          <div class="social-links">
+            <a href="#" class="btn btn-outline-primary btn-sm"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="btn btn-outline-info btn-sm"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="btn btn-outline-danger btn-sm"><i class="bi bi-google"></i></a>
+            <a href="#" class="btn btn-outline-secondary btn-sm"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8 col-md-8 col-12">
+      <div class="card">
+        <div class="card-body">
+          <ul class="nav nav-pills mb-3" id="circuit-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="recent-races-tab" data-bs-toggle="pill" data-bs-target="#recent-races" type="button" role="tab" aria-controls="recent-races" aria-selected="true">Recent Races</button>
+            </li>
+            <% @circuit.tracks.each do |track| %>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="track-<%= track.id %>-tab" data-bs-toggle="pill" data-bs-target="#track-<%= track.id %>" type="button" role="tab" aria-controls="track-<%= track.id %>" aria-selected="false"><%= track.name %></button>
+              </li>
+            <% end %>
+            <li class="nav-item" role="presentation">
+              <%= link_to "Add Track", new_circuit_track_path(@circuit), class: "btn btn-warning btn-sm" %>
+            </li>
+          </ul>
+          <div class="tab-content" id="circuit-tabContent">
+            <div class="tab-pane fade show active" id="recent-races" role="tabpanel" aria-labelledby="recent-races-tab">
+              <h4 class="mt-3">Recent Races</h4>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Track</th>
+                    <th>Driver</th>
+                    <th>Best Lap</th>
+                    <th>Avg. Lap</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @circuit.races.order(start_time: :desc).limit(5).each do |race| %>
+                    <tr>
+                      <td><%= race.start_time.strftime("%Y-%m-%d") %></td>
+                      <td><%= race.track.name %></td>
+                      <td><%= race.driver.alias %></td>
+                      <td><%= race.best_lap_time %></td>
+                      <td><%= race.avg_lap_time %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+            <% @circuit.tracks.each do |track| %>
+              <div class="tab-pane fade" id="track-<%= track.id %>" role="tabpanel" aria-labelledby="track-<%= track.id %>-tab">
+                <h4 class="mt-3"><%= track.name %> Race Times</h4>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Driver</th>
+                      <th>Best Lap</th>
+                      <th>Avg. Lap</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% track.races.order(start_time: :desc).each do |race| %>
+                      <tr>
+                        <td><%= race.start_time.strftime("%Y-%m-%d") %></td>
+                        <td><%= race.driver.alias %></td>
+                        <td><%= race.best_lap_time %></td>
+                        <td><%= race.avg_lap_time %></td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h4>Comments</h4>
+      </div>
+      <div class="card-body">
+        <%= render @circuit.comments %>
+      </div>
+      <div class="card-footer">
+        <%= render "comments/form", circuit: @circuit %>
+      </div>
+    </div>
+  </div>
+</div>

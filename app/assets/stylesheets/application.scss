@@ -1,7 +1,9 @@
 // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import "bootstrap";
 @import "driver_profile";
+@import "circuits";
 
 body{
   background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+  margin-top: 100px;
 }
