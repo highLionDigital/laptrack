@@ -1,20 +1,32 @@
-<h1>Drivers</h1>
+<div class="container px-4 py-5" id="custom-cards">
+  <h2 class="pb-2 border-bottom">Drivers</h2>
 
-<table>
-  <tr>
-    <th>Driver</th>
-    <th>Country</th>
-  </tr>
-  <% @drivers.each do |driver| %>
-    <tr>
-      <td>
-        <% if driver.alias.present? %>
-          <%= link_to driver.alias, driver %>
-        <% else %>
-          <%= driver.user.name %>
-        <% end %>
-      </td>
-      <td><%= driver.country %></td>
-    </tr>
-  <% end %>
-</table>
+  <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+
+    <% @drivers.each do |driver| %>
+      <div class="col">
+        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('<%= driver.user.picture %>');">
+          <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
+              <%= link_to(driver.alias.presence || driver.user.name, driver, class: "text-white link-light") %>
+            </h3>
+            <ul class="d-flex list-unstyled mt-auto">
+              <li class="me-auto">
+                <%= image_tag("https://github.com/twbs.png", alt: "Bootstrap", width: 32, height: 32, class: "rounded-circle border border-white") %>
+              </li>
+              <li class="d-flex align-items-center me-3">
+                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
+                <small><%= driver.country %></small>
+              </li>
+              <li class="d-flex align-items-center">
+                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"/></svg>
+                <small><%= driver.races.count %></small>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    
+  </div>
+</div>
