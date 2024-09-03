@@ -1,19 +1,45 @@
-<div>
-  <ul>
-    <li><%= link_to "Home", root_path %></li>
-    <li><%= link_to "Circuits", circuits_path %></li>
-    <li><%= link_to "Tracks", tracks_path %></li>
-    <li><%= link_to "Drivers", drivers_path %></li>
-  </ul>
-  <ul>
-    <% if user_signed_in? %>
-      <!-- Place a logout button anywhere on your application -->
-      <li><%= link_to 'Log Out', logout_path, method: :get, data: {turbo: "false"} %></li>
-    <% else %>
-      <!-- Place a login button anywhere on your application -->
-      <!-- <li><%= link_to 'Log In', '/auth/auth0', params: {prompt: 'login'}, data: {turbo: "false"} %></li> -->
-      <li><%= button_to 'Log In', '/auth/auth0', method: :post, data: { turbo: false } %></li>
-      <li><%= button_to 'Sign Up', '/auth/auth0', method: :post, params: {screen_hint: 'signup'}, data: { turbo: false } %></li>
-    <% end %>
-  </ul>
-</div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">LapTrack</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <%= link_to "Home", root_path, class: "nav-link active" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Circuits", circuits_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Tracks", tracks_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Drivers", drivers_path, class: "nav-link" %>
+        </li>
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= button_to "Add a Race", new_race_path, method: :get, class: "btn btn-primary" %>
+          </li>
+        <% end %>
+      </ul>
+      <% if user_signed_in? %>
+        <div class="dropdown ms-auto">
+          <a class="navbar-brand dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <%= image_tag current_user.picture, alt: "User profile picture", width: 48, height: 48, class: "rounded-circle" %>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li><%= link_to 'My Profile', my_profile_path, class: "dropdown-item" %></li>
+            <li><%= link_to 'Log Out', logout_path, method: :get, class: "dropdown-item", data: {turbo: "false"} %></li>
+          </ul>
+        </div>
+      <% else %>
+        <ul class="navbar-nav ms-auto">
+          <li><%= button_to 'Log In', '/auth/auth0', method: :post, data: { turbo: false } %></li>
+          <li><%= button_to 'Sign Up', '/auth/auth0', method: :post, params: {screen_hint: 'signup'}, data: { turbo: false } %></li>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</nav>

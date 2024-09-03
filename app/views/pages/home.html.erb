@@ -1,10 +1,11 @@
 <% if user_signed_in? %>
-  <h1>Welcome back, <%= current_user.name %> </h1>
+  <h1>Welcome back, <%= current_user.driver.alias || current_user.name || current_user.email %> </h1>
   <%= button_to "My Profile", my_profile_path, method: :get %>
 
 <% else %>
   <h1>Welcome to Lap Track</h1>
-  <h4>Log in to start tracking go-kart sessions</h4>
+  <h4>...a go-kart racing analytics tool that allows drivers to track their sessions and compare their performance.</h4>
+  <h6>Please log in or sign up to start tracking your races</h6>
   <!-- <%= button_to 'Log In', '/auth/auth0', params: {prompt: 'login'}, data: {turbo: "false"} %> -->
   <%= button_to 'Log In / Sign Up', '/auth/auth0', method: :post, data: { turbo: false } %>
 <% end %>

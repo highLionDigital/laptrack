@@ -34,3 +34,4 @@
 
 # Heroku env configs
 /config/.heroku.env
+/.saved.txt

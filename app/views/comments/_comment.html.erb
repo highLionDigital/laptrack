@@ -1,4 +1,5 @@
 <p>
+  <em>Date: </em><%= comment.created_at.strftime("%b %d, %Y") if comment.created_at %><br>
   <em>Driver: </em><%= comment.commenter %><br>
   <em>Comment: </em><%= comment.body %>
 </p>

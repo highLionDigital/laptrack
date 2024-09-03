@@ -3,7 +3,11 @@ class TracksController < ApplicationController
   before_action :set_circuit, only: [:index, :new, :create]
 
   def index
-    @tracks = @circuit ? @circuit.tracks : Track.all
+    @tracks = @circuit ? @circuit.tracks.includes(:circuit, :races => :driver) : Track.includes(:circuit, :races => :driver)
+    @tracks = @tracks.order('circuits.name', :name)
+    @best_times = Race.select('track_id, MIN(best_lap_time) as best_lap_time')
+                      .group(:track_id)
+                      .index_by(&:track_id)
     respond_to do |format|
       format.html
       format.json { render json: @tracks }

@@ -70,4 +70,9 @@ Rails.application.configure do
 
   # Log level
   config.log_level = :debug
+
+  # configure assets
+  config.assets.debug = true
+  config.assets.compile = true
+  config.assets.digest = false
 end

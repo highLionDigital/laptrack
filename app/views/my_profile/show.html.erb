@@ -1,51 +1,120 @@
-<div>
-
-  <h2>Welcome to your profile, <%= current_user.name %></h2>
-  <p><%= link_to "Edit Profile", edit_my_profile_path if defined?(edit_my_profile_path) %></p>
-
-  <div class="profile-info">
-    <h3>Account Information</h3>
-    <%= image_tag(current_user.picture, alt: "Profile Picture", class: "profile-picture") if current_user.picture.present? %>
-    <table>
-      <tr><td>Email:</td><td><%= current_user.email %></td></tr>
-      <tr><td>Email Verified:</td><td><%= current_user.email_verified ? "Yes" : "No" %></td></tr>
-      <tr><td>Last Updated:</td><td><%= current_user.updated_at.strftime("%B %d, %Y") %></td></tr>
-    </table>
-  </div>
-
-  <div class="driver-info">
-    <h3>Driver Information</h3>
-    <table>
-      <tr><td>Alias:</td><td><%= @current_driver.alias %></td></tr>
-      <tr><td>Date of Birth:</td><td><%= @current_driver.dob.strftime("%B %d, %Y") if @current_driver.dob.present? %></td></tr>
-      <tr><td>Bio:</td><td><%= @current_driver.bio %></td></tr>
-      <tr><td>Country:</td><td><%= @current_driver.country %></td></tr>
-    </table>
-  </div>
-
-</div>
-
-<div>
-  <h2>My races</h2>
-  <p><%= link_to "Add Race", new_race_path %></p>
-  <table>
-    <tr>
-      <th>Race Date</th>
-      <th>Total Laps</th>
-      <th>Best Lap Time</th>
-      <th>Average Lap Time</th>
-      <th>Track</th>
-      <th>Circuit</th>
-    </tr>
-    <% @current_driver.races.each do |race| %>
-      <tr>
-        <td><%= race.start_time.strftime("%Y%m%d") %></td>
-        <td><%= race.total_laps %></td>
-        <td><%= race.best_lap_time %></td>
-        <td><%= race.avg_lap_time %></td>
-        <td><%= race.track.name %></td>
-        <td><%= race.circuit.name %></td>
-      </tr>
-    <% end %>
-  </table>
+<div class="container driver-profile">
+  <form method="post">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="profile-img">
+          <%= image_tag(current_user.picture, alt: "Profile Picture", class: "img-fluid") if current_user.picture.present? %>
+          <!-- <div class="file btn btn-lg btn-primary">
+            Change Photo
+          </div> -->
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="profile-head">
+          <h5>
+            <%= current_user.name %>
+          </h5>
+          <h6>
+            <%= @current_driver.alias %>
+          </h6>
+          <p class="profile-rating">Total Races : <span><%= @current_driver.races.count %></span></p>
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">About</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Races</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <%= link_to "Edit Profile", edit_my_profile_path, class: "btn btn-sm btn-secondary" if defined?(edit_my_profile_path) %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="profile-work">
+          <p>ACCOUNT CONFIRMATION</p>
+          <a href="">Website Link</a><br/>
+          Email Verified: <%= current_user.email_verified ? "Yes" : "No" %><br>
+          Last Updated: <%= current_user.updated_at.strftime("%B %d, %Y") %>
+          <p>SKILLS</p>
+          <a href="">Web Designer</a><br/>
+          <a href="">Web Developer</a><br/>
+          <a href="">WordPress</a><br/>
+          <a href="">WooCommerce</a><br/>
+          <a href="">PHP, .Net</a><br/>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="tab-content profile-tab" id="myTabContent">
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="row">
+              <div class="col-md-6">
+                <label>User Id</label>
+              </div>
+              <div class="col-md-6">
+                <p><%= current_user.id %></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Name</label>
+              </div>
+              <div class="col-md-6">
+                <p><%= current_user.name %></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Email</label>
+              </div>
+              <div class="col-md-6">
+                <p><%= current_user.email %></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Country</label>
+              </div>
+              <div class="col-md-6">
+                <p><%= @current_driver.country %></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Date of Birth</label>
+              </div>
+              <div class="col-md-6">
+                <p><%= @current_driver.dob.strftime("%B %d, %Y") if @current_driver.dob.present? %></p>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <table class="table">
+              <tr>
+                <th>Race Date</th>
+                <th>Total Laps</th>
+                <th>Best Lap Time</th>
+                <th>Average Lap Time</th>
+                <th>Track</th>
+                <th>Circuit</th>
+              </tr>
+              <% @current_driver.races.order(start_time: :desc).each do |race| %>
+                <tr>
+                  <td><%= race.start_time.strftime("%Y%m%d") %></td>
+                  <td><%= race.total_laps %></td>
+                  <td><%= race.best_lap_time %></td>
+                  <td><%= race.avg_lap_time %></td>
+                  <td><%= race.track.name %></td>
+                  <td><%= race.circuit.name %></td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>
