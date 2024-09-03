@@ -1,14 +1,23 @@
-<h1>All tracks</h1>
+<h1>All Tracks</h1>
 
-<table>
-  <tr>
-    <th>Track</th>
-    <th>Circuit</th>
-  </tr>
-  <% @tracks.each do |track| %>
+<table class="table table-striped">
+  <thead>
     <tr>
-      <td><%= link_to track.name, track %></td>
-      <td><%= link_to track.circuit.name, track.circuit %></td>
+      <th>Track Name</th>
+      <th>Circuit Name</th>
+      <th>Driver with Best Time</th>
+      <th>Overall Best Time</th>
     </tr>
-  <% end %>
+  </thead>
+  <tbody>
+    <% @tracks.each do |track| %>
+      <tr>
+        <td><%= link_to track.name, track %></td>
+        <td><%= link_to track.circuit.name, track.circuit %></td>
+        <% best_race = track.races.min_by(&:best_lap_time) %>
+        <td><%= best_race&.driver&.alias || 'No races yet' %></td>
+        <td><%= @best_times[track.id]&.best_lap_time || 'N/A' %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>

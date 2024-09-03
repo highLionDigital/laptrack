@@ -1,28 +1,70 @@
-<div>
-  <h1><%= @track.name %></h1>
-  <h4><%= @track.circuit.name %></h4>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <h2 class="mb-2"><%= @track.name %></h2>
+      <%= link_to tracks_path, class: "btn btn-outline-secondary btn-sm mb-4" do %>
+        <i class="bi bi-arrow-left"></i> Back to Tracks
+      <% end %>
+    </div>
+  </div>
 
-  <h2>Races</h2>
-  <%= link_to "Add Race", new_race_path(track_id: @track.id) %>
-
-  <table>
-    <tr>
-      <th>Driver</th>
-      <th>Start Time</th>
-      <th>Total Laps</th>
-      <th>Best Lap Time</th>
-      <th>Avg Lap Time</th>
-    </tr>
-    <% @races.each do |race| %>
-      <tr>
-        <td><%= race.driver.alias %></td>
-        <td><%= race.start_time.strftime("%H:%M:%S") %></td>
-        <td><%= race.total_laps %></td>
-        <td><%= race.best_lap_time %></td>
-        <td><%= race.avg_lap_time %></td>
-      </tr>
-    <% end %>
-  </table>
-
-  <p><%= link_to "Back to tracks", tracks_path %></p>
+  <div class="row" id="circuit-details">
+    <div class="col-lg-4 col-md-4 col-12 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title text-center"><%= link_to @track.circuit.name, @track.circuit %></h5>
+        </div>
+        <div class="card-body text-center">
+          <%= image_tag "https://img.freepik.com/premium-photo/aerial-view-lit-car-race-track-night-created-using-generative-ai-technology_772924-8071.jpg", class: "img-fluid mb-3", alt: "Circuit Manager" %>
+          <h3><%= @track.circuit.website %></h3>
+          <p>
+            Races: <span class="badge bg-warning text-dark mb-3"><%= @track.races.count %></span><br>
+            <span class="badge bg-primary"><%= @track.races.min_by(&:best_lap_time).best_lap_time %></span>
+          </p>
+          <div class="social-links">
+            <a href="#" class="btn btn-outline-primary btn-sm"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="btn btn-outline-info btn-sm"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="btn btn-outline-danger btn-sm"><i class="bi bi-google"></i></a>
+            <a href="#" class="btn btn-outline-secondary btn-sm"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8 col-md-8 col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title text-center">Races</h5>
+        </div>
+        <div class="card-body">
+          <%= link_to new_race_path(track_id: @track.id), class: "btn btn-primary mb-3" do %>
+            <i class="bi bi-plus-circle"></i> Add a Race
+          <% end %>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Driver</th>
+                <th>Race Date</th>
+                <th>Total Laps</th>
+                <th>Best Lap Time</th>
+                <th>Avg Lap Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @races.order(best_lap_time: :asc).each do |race| %>
+                <tr>
+                  <td><%= link_to race.driver.alias, race.driver %></td>
+                  <td><%= race.start_time.strftime("%m/%d/%Y") %></td>
+                  <td><%= race.total_laps %></td>
+                  <td><%= race.best_lap_time %></td>
+                  <td><%= race.avg_lap_time %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+    </div>
+  </div>
 </div>
