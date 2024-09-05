@@ -19,7 +19,11 @@
           <h3><%= @track.circuit.website %></h3>
           <p>
             Races: <span class="badge bg-warning text-dark mb-3"><%= @track.races.count %></span><br>
-            <span class="badge bg-primary"><%= @track.races.min_by(&:best_lap_time).best_lap_time %></span>
+            <% if @track.races.any? %>
+              <span class="badge bg-primary"><%= @track.races.minimum(:best_lap_time) %></span>
+            <% else %>
+              <span class="badge bg-secondary">N/A</span>
+            <% end %>
           </p>
           <div class="social-links">
             <a href="#" class="btn btn-outline-primary btn-sm"><i class="bi bi-facebook"></i></a>
