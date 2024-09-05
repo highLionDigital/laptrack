@@ -1,56 +1,61 @@
 <%= form_with model: circuit do |form| %>
-  <div>
+  <div class="row mb-3">
     <%= form.label :name %><br>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, class: 'form-control' %>
     <% circuit.errors.full_messages_for(:name).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
 
-  <div>
-    <%= form.label :opened %><br>
-    <%= form.select :opened, (Date.today.year.downto(1960)).to_a, { prompt: "Select year" }, { name: 'circuit[opened]' } %>
+  <div class="mb-3">
+    <%= form.label :opened, class: "form-label" %>
+    <%= form.select :opened, (Date.today.year.downto(1960)).to_a, { prompt: "Select year" }, { name: 'circuit[opened]', class: 'form-select' } %>
   </div>
 
-  <div>
+  <div class="row mb-3">
     <%= form.label :website %><br>
-    <%= form.text_field :website %>
+    <%= form.text_field :website, class: 'form-control' %>
   </div>
 
-  <div>
+  <div class="row mb-3">
     <%= form.label :address %><br>
-    <%= form.text_field :address %>
+    <%= form.text_field :address, class: 'form-control' %>
     <% circuit.errors.full_messages_for(:address).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
 
-  <div>
+  <div class="row mb-3">
     <%= form.label :description %><br>
-    <%= form.text_area :description %>
+    <%= form.text_area :description, class: 'form-control' %>
   </div>
 
-  <div>
+  <hr class="my-4">
+
+  <div class="row mb-3">
     <h5>Add a track</h5>
     <%= form.fields_for :tracks do |circuit_track| %>
       <div>
         <%= circuit_track.label :name %>
-        <%= circuit_track.text_field :name %>
+        <%= circuit_track.text_field :name, class: 'form-control' %>
       </div>
 
-      <div>
-        <%= circuit_track.label :location %>
-        <%= circuit_track.collection_radio_buttons :location, Track::LOCATIONS, :to_s, :titleize do |b| %>
-          <%= b.radio_button %>
-          <%= b.label %>
-        <% end %>
+      <div class="row mb-3">
+        <legend class="col-form-label col-sm-2 pt-0">Type</legend>
+        <div class="col-sm-10">
+          <%= circuit_track.collection_radio_buttons :location, Track::LOCATIONS, :to_s, :titleize do |b| %>
+            <div class="form-check">
+            <%= b.radio_button class: 'form-check-input', type: 'radio' %>
+            <%= b.label class: 'form-check-label' %>
+            </div>
+          <% end %>
+        </div>
       </div>
     <% end %>
   </div>
 
-
   <div>
-    <%= form.submit %>
+    <%= form.submit "Add Circuit", class: "btn btn-primary" %>
   </div>
 
 <% end %>
