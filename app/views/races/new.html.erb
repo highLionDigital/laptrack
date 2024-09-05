@@ -1,7 +1,15 @@
 <div class="container px-4 py-5">
   <h2 class="pb-2 border-bottom">Add a new race</h2>
 
-  <%= render "form", race: @race %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= render "form", race: @race %>
+    </div>
 
-  <%= link_to "Back", :back %>
+    <div class="col-md-6">
+      <%= image_tag 'races/gokart1.jpg', class: 'img-fluid' %>
+    </div>
+  </div>
+
+  <%= link_to "Back", :back, class: 'mt-3 d-inline-block' %>
 </div>
