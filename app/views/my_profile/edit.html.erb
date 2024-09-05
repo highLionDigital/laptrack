@@ -1,42 +1,50 @@
 <div class="container px-4 py-5">
   <h2 class="pb-2 border-bottom">Edit your driver profile</h2>
 
-  <%= form_with(model: @current_driver, url: my_profile_path, method: :patch, local: true) do |form| %>
-    <% if @current_driver.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@current_driver.errors.count, "error") %> prohibited this profile from being saved:</h2>
-        <ul>
-          <% @current_driver.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= form_with(model: @current_driver, url: my_profile_path, method: :patch, local: true) do |form| %>
+        <% if @current_driver.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@current_driver.errors.count, "error") %> prohibited this profile from being saved:</h2>
+            <ul>
+              <% @current_driver.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
 
-    <div class="field">
-      <%= form.label :alias %>
-      <%= form.text_field :alias %>
+        <div class="row mb-3">
+          <%= form.label :alias %>
+          <%= form.text_field :alias, class: 'form-control' %>
+        </div>
+
+        <div class="row mb-3">
+          <%= form.label :dob, "Date of Birth" %>
+          <%= form.date_field :dob, class: 'form-control' %>
+        </div>
+
+        <div class="row mb-3">
+          <%= form.label :country %>
+          <%= form.text_field :country, class: 'form-control' %>
+        </div>
+
+        <div class="row mb-3">
+          <%= form.label :bio %>
+          <%= form.text_area :bio, class: 'form-control' %>
+        </div>
+
+        <div>
+          <%= form.submit "Update Profile", class: 'btn btn-primary' %>
+        </div>
+      <% end %>
     </div>
 
-    <div class="field">
-      <%= form.label :dob, "Date of Birth" %>
-      <%= form.date_field :dob %>
+    <div class="col-md-6">
+      <%= image_tag 'drivers/driver1.jpg', class: 'img-fluid' %>
     </div>
-
-    <div class="field">
-      <%= form.label :country %>
-      <%= form.text_field :country %>
-    </div>
-
-    <div class="field">
-      <%= form.label :bio %>
-      <%= form.text_area :bio %>
-    </div>
-
-    <div class="actions">
-      <%= form.submit "Update Profile" %>
-    </div>
-  <% end %>
+  </div>
 
   <%= link_to 'Back to Profile', my_profile_path %>
   
