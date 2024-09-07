@@ -2,20 +2,20 @@
   <div>
     <%= form.label :circuit_id, 'Circuit' %><br>
     <%= form.collection_select :circuit_id, Circuit.all, :id, :name, 
-                               { prompt: 'Select a Circuit', selected: @circuit&.id }, 
-                               { class: 'form-control', id: 'circuit-select' } %>
+                              { prompt: 'Select a Circuit', selected: @circuit&.id }, 
+                              { class: 'form-control', id: 'circuit-select' } %>
   </div>
 
   <div>
     <%= form.label :track_id, 'Track' %><br>
     <%= form.collection_select :track_id, @circuit ? @circuit.tracks : [], :id, :name, 
-                               { prompt: 'Select a Track', selected: @track&.id }, 
-                               { class: 'form-control', id: 'track-select', disabled: @circuit.nil? } %>
+                              { prompt: 'Select a Track', selected: @track&.id }, 
+                              { class: 'form-control', id: 'track-select', disabled: @circuit.nil? } %>
   </div>
 
   <div>
     <%= form.label :start_time, 'Start Time' %><br>
-    <%= form.datetime_local_field :start_time, class: 'form-control' %>
+    <%= form.datetime_local_field :start_time, class: 'form-control', value: (Time.current - 20.minutes).strftime('%Y-%m-%dT%H:%M') %>
   </div>
 
   <div>
@@ -25,23 +25,27 @@
 
   <div>
     <%= form.label :best_lap_time, 'Best Lap Time' %><br>
-    <div class="lap-time-input">
+    <div class="input-group mb-3 lap-time-input">
       <%= form.hidden_field :best_lap_time %>
-      <input type="number" min="0" max="99" class="form-control lap-time-part" data-part="minutes" style="width: 50px;"> '
-      <input type="number" min="0" max="59" class="form-control lap-time-part" data-part="seconds" style="width: 50px;"> .
+      <input type="number" min="0" max="99" class="form-control lap-time-part" data-part="minutes" style="width: 50px;">
+      <span class="input-group-text">:</span>
+      <input type="number" min="0" max="59" class="form-control lap-time-part" data-part="seconds" style="width: 50px;">
+      <span class="input-group-text">.</span>
       <input type="number" min="0" max="999" class="form-control lap-time-part" data-part="milliseconds" style="width: 60px;">
-      <span class="lap-time-display"></span>
+      <span class="badge bg-secondary d-flex align-items-center justify-content-center lap-time-display"></span>
     </div>
   </div>
 
   <div>
     <%= form.label :avg_lap_time, 'Average Lap Time' %><br>
-    <div class="lap-time-input">
+    <div class="input-group mb-3 lap-time-input">
       <%= form.hidden_field :avg_lap_time %>
-      <input type="number" min="0" max="99" class="form-control lap-time-part" data-part="minutes" style="width: 50px;"> '
-      <input type="number" min="0" max="59" class="form-control lap-time-part" data-part="seconds" style="width: 50px;"> .
+      <input type="number" min="0" max="99" class="form-control lap-time-part" data-part="minutes" style="width: 50px;">
+      <span class="input-group-text">:</span>
+      <input type="number" min="0" max="59" class="form-control lap-time-part" data-part="seconds" style="width: 50px;">
+      <span class="input-group-text">.</span>
       <input type="number" min="0" max="999" class="form-control lap-time-part" data-part="milliseconds" style="width: 60px;">
-      <span class="lap-time-display"></span>
+      <span class="badge bg-secondary d-flex align-items-center justify-content-center lap-time-display"></span>
     </div>
   </div>
 

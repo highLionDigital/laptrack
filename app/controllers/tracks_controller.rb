@@ -16,7 +16,7 @@ class TracksController < ApplicationController
 
   def show
     @track = Track.find(params[:id])
-    @races = Race.where(track_id: @track.id)
+    @races = @track.races.order(best_lap_time: :asc)
   end
 
   def new

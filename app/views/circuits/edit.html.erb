@@ -1,5 +1,15 @@
-<h1>Edit Circuit</h1>
+<div class="container px-4 py-5">
+  <h2 class="pb-2 border-bottom">Edit Circuit</h2>
 
-<%= render "form", circuit: @circuit %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= render "form", circuit: @circuit %>
+    </div>
 
-<%= link_to "Back", circuits_path %>
+    <div class="col-md-6">
+      <%= image_tag 'circuits/circuit1.jpg', class: 'img-fluid' %>
+    </div>
+  </div>
+
+  <%= link_to "Back", circuits_path %>
+</div>

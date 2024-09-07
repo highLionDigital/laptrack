@@ -1,6 +1,7 @@
-<p>
-  <em>Date: </em><%= comment.created_at.strftime("%b %d, %Y") if comment.created_at %><br>
-  <em>Driver: </em><%= comment.commenter %><br>
-  <em>Comment: </em><%= comment.body %>
-</p>
-
+<div class="card mb-3">
+  <div class="card-body">
+    <h6 class="card-subtitle mb-2 text-muted"><%= comment.created_at.strftime("%b %d, %Y") if comment.created_at %></h6>
+    <h5 class="card-title"><%= comment.commenter %></h5>
+    <p class="card-text"><%= comment.body %></p>
+  </div>
+</div>

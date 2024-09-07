@@ -1,13 +1,23 @@
-<%= form_with model: [ @circuit, @circuit.comments.build ] do |form| %>
-  <p>
-    <%= form.label :commenter %><br>
-    <%= form.text_field :commenter, value: current_user.driver.alias, disabled: true %>
-  </p>
-  <p>
-    <%= form.label :body %><br>
-    <%= form.text_area :body %>
-  </p>
-  <p>
-    <%= form.submit %>
-  </p>
+<%= form_with model: [ @circuit, @circuit.comments.build ], class: "mb-3" do |form| %>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="mb-3">
+        <%= form.label :commenter, class: "form-label" %>
+        <%= form.text_field :commenter, value: current_user.driver.alias, disabled: true, class: "form-control" %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-3">
+        <%= form.label :body, class: "form-label" %>
+        <%= form.text_area :body, class: "form-control", rows: 3 %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="mb-3">
+        <%= form.submit class: "btn btn-primary" %>
+    </div>
+  </div>
 <% end %>
