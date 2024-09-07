@@ -1,7 +1,8 @@
 class Track < ApplicationRecord
-  LOCATIONS =  [ 'indoor', 'outdoor', 'hybrid' ]
+  TYPES = ['indoor', 'outdoor', 'hybrid']
 
   belongs_to :circuit
   has_many :races, dependent: :destroy
 
+  validates :track_type, inclusion: { in: TYPES }
 end
