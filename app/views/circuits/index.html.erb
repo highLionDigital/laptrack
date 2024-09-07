@@ -13,6 +13,11 @@
               <li class="me-auto">
                 <%= image_tag("https://github.com/twbs.png", alt: "Bootstrap", width: 32, height: 32, class: "rounded-circle border border-white") %>
               </li>
+              <% if circuit.test %>
+                <li class="d-flex align-items-center">
+                  <span class="badge rounded-pill text-bg-warning">Test</span>
+                </li>
+              <% end %>
               <li class="d-flex align-items-center me-3">
                 <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>
                 <small><%= circuit.address %></small>

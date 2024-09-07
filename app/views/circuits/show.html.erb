@@ -1,4 +1,9 @@
 <div class="container mt-5">
+<% if @circuit.test? %>
+<div class="alert alert-warning" role="alert">
+  This is a test circuit. It is not an actual circuit.
+</div>
+<% end %>
   <div class="row">
     <div class="col-12">
       <h2 class="mb-4"><%= @circuit.name %></h2>
@@ -113,7 +118,11 @@
         <%= render @circuit.comments %>
       </div>
       <div class="card-footer">
-        <%= render "comments/form", circuit: @circuit %>
+        <% if user_signed_in? %>
+          <%= render "comments/form", circuit: @circuit %>
+        <% else %>
+          <p>Please <%= link_to "sign in", '/auth/auth0', method: :post, data: { turbo: false } %> to add a comment.</p>
+        <% end %>
       </div>
     </div>
   </div>
