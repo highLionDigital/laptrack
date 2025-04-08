@@ -1,4 +1,15 @@
 <%= form_with model: circuit do |form| %>
+  <div class="alert alert-info" role="alert">
+    Please select the checkbox if this is a test circuit. They help us experiment and test the system.
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-sm-10">
+      <%= form.check_box :test, class: 'form-check-input' %>
+      <%= form.label :test, "This is a test circuit", class: 'form-check-label' %>
+    </div>
+  </div>
+
   <div class="row mb-3">
     <%= form.label :name %><br>
     <%= form.text_field :name, class: 'form-control' %>
@@ -43,10 +54,10 @@
       <div class="row mb-3">
         <legend class="col-form-label col-sm-2 pt-0">Type</legend>
         <div class="col-sm-10">
-          <%= circuit_track.collection_radio_buttons :location, Track::LOCATIONS, :to_s, :titleize do |b| %>
+          <%= circuit_track.collection_radio_buttons :track_type, Track::TYPES, :to_s, :titleize do |b| %>
             <div class="form-check">
-            <%= b.radio_button class: 'form-check-input', type: 'radio' %>
-            <%= b.label class: 'form-check-label' %>
+              <%= b.radio_button class: 'form-check-input', type: 'radio' %>
+              <%= b.label class: 'form-check-label' %>
             </div>
           <% end %>
         </div>

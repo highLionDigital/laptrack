@@ -49,8 +49,8 @@ class CircuitsController < ApplicationController
   end
 
   def circuit_params
-    params.require(:circuit).permit(:name, :opened, :website, :address, :description,
-                tracks_attributes: [:id, :name, :location])
+    params.require(:circuit).permit(:name, :opened, :website, :address, :description, :test,
+                tracks_attributes: [:id, :name, :track_type])
   end
 
 end

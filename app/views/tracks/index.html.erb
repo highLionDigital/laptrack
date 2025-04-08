@@ -16,8 +16,13 @@
           <td><%= link_to track.name, track %></td>
           <td><%= link_to track.circuit.name, track.circuit %></td>
           <% best_race = track.races.min_by(&:best_lap_time) %>
-          <td><%= best_race&.driver&.alias || 'No races yet' %></td>
-          <td><%= @best_times[track.id]&.best_lap_time || 'N/A' %></td>
+          <% if best_race %>
+            <td><%= link_to best_race&.driver&.alias, best_race&.driver %></td>
+            <td><%= best_race&.best_lap_time %></td>
+          <% else %>
+            <td>No races yet</td>
+            <td>N/A</td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>
